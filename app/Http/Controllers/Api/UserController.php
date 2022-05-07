@@ -16,6 +16,17 @@ class UserController extends Controller
         $this->user = $user;
     }
 
+    public function index()
+    {
+        $user = User::all();
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Lista de Usuários',
+            'data' => $user
+        ]);
+    }
+
     public function show(int $id): \Illuminate\Http\JsonResponse
     {
         try {
@@ -24,12 +35,10 @@ class UserController extends Controller
             return response()->json([
                 'data' => $user
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 422);
         }
     }
-
 
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -43,12 +52,12 @@ class UserController extends Controller
                 'data' => [
                     'status' => 'success',
                     'data' => $user
-                ]], 202);
+                ]
+            ], 202);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 422);
         }
     }
-
 
     public function update(Request $request, int $id): \Illuminate\Http\JsonResponse
     {
@@ -85,6 +94,5 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 422);
         }
-
     }
 }
